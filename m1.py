@@ -25,12 +25,22 @@ while True :
 
         item_encontrado = False
         for i in range(len(produtos)):
-            if item == produtos[i].lower():
-                quantidade = int(input("Digite a quantidade: "))
+            if item == produtos[i].lower(): # Compara as strings, ambas em minúsculas
+                while True:
+                    qtd_string = input("Digite a quantidade: ")
+                    if qtd_string.isdigit(): # Verifica se é dígito
+                        quantidade = int(qtd_string)
+                        if quantidade > 0: # Verifica se é maior que 0
+                            break
+                        else:
+                            print("A quantidade deve ser maior que zero!")
+                    else:
+                        print("Digite apenas números inteiros positivos.")
+
                 carrinho[i] += quantidade
                 carrinho_vazio = False
                 print(quantidade, "unidade(s) de", produtos[i], "adicionada(s) ao carrinho.")
-                encontrado = True
+                item_encontrado = True
         if not item_encontrado:
             print("Item não encontrado.")
 
@@ -54,28 +64,25 @@ while True :
 
         print("\n==================== RECIBO ===================")
         print("--------------- ITENS COMPRADOS ---------------")
-        print(f"{'Qtd.':<6}{'Produto':<15}{'(Preco Un.)':<20}{'Subtotal':>10}")
+        print(f"{'Qtd.':<6}{'Produto':<20}{'Preco Un.':<15}{'Subtotal':>10}")
         print("------------------------------------------------")
 
         total_bruto = 0
 
         for i in range(len(produtos)):
             if carrinho[i] > 0:
-                vazio = False
                 subtotal = precos[i] * carrinho[i]
-                desconto_volume = 0
 
-                if carrinho[i] > 3:  # desconto por volume
-                    desconto_volume = subtotal * 0.03
-                    subtotal -= desconto_volume
+                if carrinho[i] > 3: # Desconto por volume a partir de 3 unidades
+                    subtotal *= 0.97
+                    total_bruto += subtotal
+                    print(carrinho[i], "x", produtos[i], "(R$", f"{precos[i]:.2f}", "/un)", "R$", f"{subtotal:.2f}")
+                    print(f"{'':<8}-> Desconto de 3% por volume aplicado.")
+                else:
+                    total_bruto += subtotal
+                    print(carrinho[i], "x", produtos[i], "(R$", f"{precos[i]:.2f}", "/un)", "R$", f"{subtotal:.2f}")
 
-                total_bruto += subtotal
-                print(carrinho[i], "x", produtos[i], "(R$", f"{precos[i]:.2f}", "/un)", "R$", f"{subtotal:.2f}")
-
-                if desconto_volume > 0:
-                    print(" -> Desconto de 3% por volume aplicado.")
-
-        # Desconto geral
+        # Desconto geral: 10% para compras de R$100,00 a R$200,00; 20% para compras acima de R$200,00
         if total_bruto > 200:
             desconto_geral = total_bruto * 0.15
             percentual = 15
@@ -89,15 +96,14 @@ while True :
         valor_final = total_bruto - desconto_geral
 
         print("------------------------------------------------")
-        print(f"{'Total Bruto:':<35}R$ {total_bruto:>7.2f}")
+        print(f"{'Total Bruto:':<43}R$ {total_bruto:>10.2f}")
         if percentual > 0:
-            print(f"Desconto da Compra ({percentual}%):{'':<11}R$ {desconto_geral:>7.2f}")
+            print(f"{'Desconto da Compra (' + str(percentual) + '%):':<43}R$ {desconto_geral:>10.2f}")
         print("------------------------------------------------")
-        print(f"{'Valor Final a Pagar:':<35}R$ {valor_final:>7.2f}")
+        print(f"{'Valor Final a Pagar:':<43}R$ {valor_final:>10.2f}")
         print("================================================")
         print("Obrigado pela sua compra!")
-
-
         break
+
     else:
         print("Opção inválida!")
