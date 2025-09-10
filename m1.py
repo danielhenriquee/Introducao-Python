@@ -2,18 +2,13 @@
 # Guilherme Melo           - Código de pessoa: 8576076 - Número de matrícula: 26.1.0379
 # Leonardo Pinheiro de Souza - Código de pessoa: 8557802 - Número de matrícula: 25.2.7332
 
-# Lista de produtos e seus preços associados
-produtos = {
-    "arroz": 25.50,
-    "feijao": 8.90,
-    "oleo de soja": 7.00,
-    "cafe": 50.00,
-    "leite": 4.50
-}
+# Lista de produtos, preços e carrinho # Itens são associados pelos índices
+produtos = ["Arroz", "Feijao", "Oleo de soja", "Cafe", "Leite"]
+precos   = [25.50, 8.90, 7.00, 50.00, 4.50]
+carrinho = [0, 0, 0, 0, 0] # Carrinho começa vazio
+carrinho_vazio = True
 
-carrinho = {}
-
-while True :
+while True : 
     print("\n**** Supermercado Python ****")
     print("1. Adicionar item ao carrinho")
     print("2. Ver total da compra")
@@ -28,32 +23,32 @@ while True :
         if item == "oleo": # Tratamento especial para aceitar "oleo" como "oleo de soja"
             item = "oleo de soja"
 
-        if item in produtos: # Verifica se o item está na lista de produtos
-            quantidade = int(input("Digite a quantidade: "))
-            if item in carrinho: # Se o item já estiver no carrinho, soma a quantidade adicionada
-                carrinho[item] += quantidade
-            else: # Se o item não estiver no carrinho, adiciona com a quantidade informada
-                carrinho[item] = quantidade
-
-            print(f"{quantidade} unidade(s) de {item} adicionada(s) ao carrinho.")
-        else:
+        item_encontrado = False
+        for i in range(len(produtos)):
+            if item == produtos[i].lower():
+                quantidade = int(input("Digite a quantidade: "))
+                carrinho[i] += quantidade
+                carrinho_vazio = False
+                print(quantidade, "unidade(s) de", produtos[i], "adicionada(s) ao carrinho.")
+                encontrado = True
+        if not item_encontrado:
             print("Item não encontrado.")
 
     elif opcao == "2": # Ver total da compra
-        if not carrinho: # Verifica se o carrinho está vazio
-            print("Carrinho vazio.")
-        else: # Mostra os itens no carrinho e o total parcial
-            total = 0 
-            print("\nItens no carrinho:")
-            for item, quantidade in carrinho.items(): 
-                preco = produtos[item]
-                subtotal = preco * quantidade
+        total = 0
+        print("\nItens no carrinho:")
+        for i in range(len(produtos)): # Itera por todos itens
+            if carrinho[i] > 0: # Se há unidades do item
+                subtotal = precos[i] * carrinho[i]
+                print(carrinho[i], "x", produtos[i], "(R$", f"{precos[i]:.2f}", "/un) = R$", f"{subtotal:.2f}")
                 total += subtotal
-                print(f"{quantidade} x {item.capitalize()} (R${preco:.2f}/un) = R${subtotal:.2f}")
-            print(f"Total parcial: R${total:.2f}")
+        if carrinho_vazio:
+            print("Carrinho vazio.")
+        else:
+            print("Total parcial: R$", f"{total:.2f}")
 
     elif opcao == "3": # Finalizar compra
-        if not carrinho:
+        if carrinho_vazio:
             print("Carrinho vazio.")
             break
 
@@ -64,23 +59,21 @@ while True :
 
         total_bruto = 0
 
-        for item, quantidade in carrinho.items():
-            preco = produtos[item]
-            subtotal = preco * quantidade
-            desconto_volume = 0
+        for i in range(len(produtos)):
+            if carrinho[i] > 0:
+                vazio = False
+                subtotal = precos[i] * carrinho[i]
+                desconto_volume = 0
 
-            if quantidade > 3:  # Desconto de 3% no item
-                desconto_volume = subtotal * 0.03
-                subtotal -= desconto_volume
+                if carrinho[i] > 3:  # desconto por volume
+                    desconto_volume = subtotal * 0.03
+                    subtotal -= desconto_volume
 
-            total_bruto += subtotal
+                total_bruto += subtotal
+                print(carrinho[i], "x", produtos[i], "(R$", f"{precos[i]:.2f}", "/un)", "R$", f"{subtotal:.2f}")
 
-            # Linha principal do item (alinhado em colunas fixas)
-            print(f"{str(quantidade)+' x':<6}{item.capitalize():<15}(R$ {preco:>6.2f}/un){subtotal:>15.2f}")
-
-            # Mensagem de desconto logo abaixo do item
-            if desconto_volume > 0:
-                print(f"{'':<8}-> Desconto de 3% por volume aplicado.")
+                if desconto_volume > 0:
+                    print(" -> Desconto de 3% por volume aplicado.")
 
         # Desconto geral
         if total_bruto > 200:
