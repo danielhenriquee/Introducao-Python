@@ -2,16 +2,6 @@
 # Guilherme Melo           - Código de pessoa: 8576076 - Número de matrícula: 26.1.0379
 # Leonardo                 - Código de pessoa:         - Número de matrícula:
 
-import os # Importa o módulo os para limpar a tela 
-
-def clear(): # Função para limpar a tela 
-    # Para Windows
-    if os.name == "nt":
-        os.system("cls")
-    # Para Linux/Mac
-    else:
-        os.system("clear")
-
 # Produtos
 produtos = {
     "arroz": 25.50,
@@ -45,13 +35,11 @@ while True :
             else: # Se o item não estiver no carrinho, adiciona com a quantidade informada
                 carrinho[item] = quantidade
             
-            clear()
             print(f"{quantidade} unidade(s) de {item} adicionada(s) ao carrinho.")
         else:
             print("Item não encontrado.")   
         
     elif opcao == "2": # Ver total da compra
-        clear()
         if not carrinho: # Verifica se o carrinho está vazio
             print("Carrinho vazio.")
         else: # Mostra os itens no carrinho e o total parcial
@@ -65,7 +53,6 @@ while True :
             print(f"Total parcial: R${total:.2f}")   
 
     elif opcao == "3": # Finalizar compra
-        clear()
         if not carrinho:
             print("Carrinho vazio.")
             break
