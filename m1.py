@@ -2,7 +2,7 @@
 # Guilherme Melo           - Código de pessoa: 8576076 - Número de matrícula: 26.1.0379
 # Leonardo Pinheiro de Souza - Código de pessoa: 8557802 - Número de matrícula: 25.2.7332
 
-# Produtos
+# Lista de produtos e seus preços associados
 produtos = {
     "arroz": 25.50,
     "feijao": 8.90,
@@ -23,7 +23,7 @@ while True :
 
     if opcao == "1": # Adicionar item ao carrinho
         print("Itens em estoque: Arroz, Feijao, Oleo de soja, Cafe, Leite.")
-        item = input("Digite o nome do item que deseja adicionar: ").strip().lower()
+        item = input("Digite o nome do item que deseja adicionar: ").strip().lower() # Formata todos as letras como minúsculas e remove espaços
 
         if item == "oleo": # Tratamento especial para aceitar "oleo" como "oleo de soja"
             item = "oleo de soja"
@@ -43,9 +43,9 @@ while True :
         if not carrinho: # Verifica se o carrinho está vazio
             print("Carrinho vazio.")
         else: # Mostra os itens no carrinho e o total parcial
-            total = 0
+            total = 0 
             print("\nItens no carrinho:")
-            for item, quantidade in carrinho.items():
+            for item, quantidade in carrinho.items(): 
                 preco = produtos[item]
                 subtotal = preco * quantidade
                 total += subtotal
