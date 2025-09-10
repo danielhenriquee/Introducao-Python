@@ -8,7 +8,7 @@ precos   = [25.50, 8.90, 7.00, 50.00, 4.50]
 carrinho = [0, 0, 0, 0, 0] # Carrinho começa vazio
 carrinho_vazio = True
 
-while True : 
+while True :
     print("\n**** Supermercado Python ****")
     print("1. Adicionar item ao carrinho")
     print("2. Ver total da compra")
@@ -76,11 +76,11 @@ while True :
                 if carrinho[i] > 3: # Desconto por volume a partir de 3 unidades
                     subtotal *= 0.97
                     total_bruto += subtotal
-                    print(carrinho[i], "x", produtos[i], "(R$", f"{precos[i]:.2f}", "/un)", "R$", f"{subtotal:.2f}")
+                    print(carrinho[i], "x", produtos[i], "         (R$", f"{precos[i]:.2f}", "/un)", "         R$", f"{subtotal:.2f}")
                     print(f"{'':<8}-> Desconto de 3% por volume aplicado.")
                 else:
                     total_bruto += subtotal
-                    print(carrinho[i], "x", produtos[i], "(R$", f"{precos[i]:.2f}", "/un)", "R$", f"{subtotal:.2f}")
+                    print(carrinho[i], "x", produtos[i], "         (R$", f"{precos[i]:.2f}", "/un)", "         R$", f"{subtotal:.2f}")
 
         # Desconto geral: 10% para compras de R$100,00 a R$200,00; 20% para compras acima de R$200,00
         if total_bruto > 200:
