@@ -62,10 +62,10 @@ while True :
             print("Carrinho vazio.")
             break
 
-        print("\n==================== RECIBO ===================")
-        print("--------------- ITENS COMPRADOS ---------------")
-        print(f"{'Qtd.':<6}{'Produto':<20}{'Preco Un.':<15}{'Subtotal':>10}")
-        print("------------------------------------------------")
+        print("\n======================== RECIBO ======================")
+        print("------------------- ITENS COMPRADOS ------------------")
+        print(f"{'Qtd.':<8} {'Produto':<14} {'Preço Un.':<15} {'Subtotal':>14}")
+        print("------------------------------------------------------")
 
         total_bruto = 0
 
@@ -76,11 +76,11 @@ while True :
                 if carrinho[i] > 3: # Desconto por volume a partir de 3 unidades
                     subtotal *= 0.97
                     total_bruto += subtotal
-                    print(carrinho[i], "x", produtos[i], "         (R$", f"{precos[i]:.2f}", "/un)", "         R$", f"{subtotal:.2f}")
-                    print(f"{'':<8}-> Desconto de 3% por volume aplicado.")
+                    print(f"{carrinho[i]:>4} {'x':^3} {produtos[i]:<14} (R$ {precos[i]:>7.2f}/un) {('R$ ' + format(subtotal, '.2f')):>14}")
+                    print(f"{'':<9}-> Desconto de 3% por volume aplicado.")
                 else:
                     total_bruto += subtotal
-                    print(carrinho[i], "x", produtos[i], "         (R$", f"{precos[i]:.2f}", "/un)", "         R$", f"{subtotal:.2f}")
+                    print(f"{carrinho[i]:>4} {'x':^3} {produtos[i]:<14} (R$ {precos[i]:>7.2f}/un) {('R$ ' + format(subtotal, '.2f')):>14}")
 
         # Desconto geral: 10% para compras de R$100,00 a R$200,00; 20% para compras acima de R$200,00
         if total_bruto > 200:
@@ -95,13 +95,13 @@ while True :
 
         valor_final = total_bruto - desconto_geral
 
-        print("------------------------------------------------")
-        print(f"{'Total Bruto:':<43}R$ {total_bruto:>10.2f}")
+        print("------------------------------------------------------")
+        print(f"{'Total Bruto:':<40}R$ {total_bruto:>11.2f}")
         if percentual > 0:
-            print(f"{'Desconto da Compra (' + str(percentual) + '%):':<43}R$ {desconto_geral:>10.2f}")
-        print("------------------------------------------------")
-        print(f"{'Valor Final a Pagar:':<43}R$ {valor_final:>10.2f}")
-        print("================================================")
+            print(f"{'Desconto da Compra (' + str(percentual) + '%):':<40}R$ {desconto_geral:>11.2f}")
+        print("------------------------------------------------------")
+        print(f"{'Valor Final a Pagar:':<40}R$ {valor_final:>11.2f}")
+        print("======================================================")
         print("Obrigado pela sua compra!")
         break
 
