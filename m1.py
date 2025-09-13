@@ -2,6 +2,8 @@
 # Guilherme Melo             - Código de pessoa: 8576076 - Número de matrícula: 26.1.0379
 # Leonardo Pinheiro de Souza - Código de pessoa: 8557802 - Número de matrícula: 25.2.7332
 
+# Comando no terminal para rodar o programa: python m1.py
+
 # Lista de produtos, preços e carrinho # Itens são associados pelos índices
 produtos = ["Arroz", "Feijao", "Oleo de soja", "Cafe", "Leite"]
 precos   = [25.50, 8.90, 7.00, 50.00, 4.50]
@@ -64,7 +66,7 @@ while True :
 
         print("\n========================= RECIBO =======================")
         print("-------------------- ITENS COMPRADOS -------------------")
-        print(f"{'Qtd.':<8} {'Produto':<14} {'Preço Un.':<15} {'Subtotal':>14}")
+        print(f"{'Qtd.':<8} {'Produto':<14} {'Preço Un.':<19} Subtotal")
         print("--------------------------------------------------------")
 
         total_bruto = 0
@@ -76,11 +78,11 @@ while True :
                 if carrinho[i] > 3: # Desconto por volume a partir de 3 unidades
                     subtotal *= 0.97 # Desconto de 3%
                     total_bruto += subtotal
-                    print(f"{carrinho[i]:<4} {'x':^3} {produtos[i]:<14} (R$ {precos[i]:>7.2f}/un) {('R$ ' + format(subtotal, '.2f')):>14}")
+                    print(f"{carrinho[i]:<4} {'x':^3} {produtos[i]:<14} (R$ {precos[i]:>7.2f}/un) {'R$':>6} {subtotal:>7.2f}")
                     print(f"{'':<9}-> Desconto de 3% por volume aplicado.")
                 else:
                     total_bruto += subtotal
-                    print(f"{carrinho[i]:>4} {'x':^3} {produtos[i]:<14} (R$ {precos[i]:>7.2f}/un) {('R$ ' + format(subtotal, '.2f')):>14}")
+                    print(f"{carrinho[i]:<4} {'x':^3} {produtos[i]:<14} (R$ {precos[i]:>7.2f}/un) {'R$':>6} {subtotal:>7.2f}")
 
         # Desconto geral: 10% para compras de R$100,00 a R$200,00; 20% para compras acima de R$200,00
         if total_bruto > 200:
@@ -96,14 +98,16 @@ while True :
         valor_final = total_bruto - desconto_geral
 
         print("--------------------------------------------------------")
-        print(f"{'Total Bruto:':<40}R$ {total_bruto:>11.2f}")
+        print(f"{'Total Bruto:':<39} {'R$':>6} {total_bruto:>7.2f}")
         if percentual > 0:
-            print(f"{'Desconto da Compra (' + str(percentual) + '%):':<40} {('R$ ' + format(desconto_geral, '.2f')):>11}")
+            print(f"{'Desconto da Compra (' + str(percentual) + '%):':<39} {'R$':>6} {desconto_geral:>7.2f}")
         print("--------------------------------------------------------")
-        print(f"{'Valor Final a Pagar:':<40}R$ {valor_final:>11.2f}")
+        print(f"{'Valor Final a Pagar:':<39} {'R$':>6} {valor_final:>7.2f}")
         print("========================================================")
         print("Obrigado pela sua compra!")
         break
 
     else:
-        print("Opção inválida!")
+        if opcao.isdigit():
+            print("Opção inválida, Digite 1, 2 ou 3!")
+        print("Entrada inválida! Digite apenas números inteiros (1, 2 ou 3).")
