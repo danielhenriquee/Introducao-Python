@@ -16,17 +16,17 @@ O sistema aplica regras de desconto tanto por quantidade quanto por valor total,
       - O programa solicita o nome do produto e a quantidade.
       - Aceita variações como "oleo" para "Oleo de soja".
   2) Garante que a quantidade seja um número inteiro positivo.
-    - Ver total da compra
-    - Exibe todos os itens adicionados ao carrinho com preço unitário, subtotal e total parcial.
-    - Caso o carrinho esteja vazio, o sistema informa o usuário.
+      - Ver total da compra
+      - Exibe todos os itens adicionados ao carrinho com preço unitário, subtotal e total parcial.
+      - Caso o carrinho esteja vazio, o sistema informa o usuário.
   3) Finalizar compra
-    - Mostra o recibo completo com todos os produtos comprados.
-    - Aplica desconto por volume:
-      - 3% para produtos com mais de 3 unidades.
-    - Aplica desconto geral:
-      - 10% para compras entre R$ 100,00 e R$ 200,00.
-      - 15% para compras acima de R$ 200,00.
-    - Exibe o total bruto, descontos e valor final a pagar.
+      - Mostra o recibo completo com todos os produtos comprados.
+      - Aplica desconto por volume:
+        - 3% para produtos com mais de 3 unidades.
+      - Aplica desconto geral:
+        - 10% para compras entre R$ 100,00 e R$ 200,00.
+        - 15% para compras acima de R$ 200,00.
+      - Exibe o total bruto, descontos e valor final a pagar.
 - Tratamento de entradas inválidas
     - Se o usuário digitar letras ou símbolos no menu → mensagem clara solicitando apenas números inteiros.
     - Se digitar número fora das opções (ex.: 7) → mensagem específica indicando opções válidas (1, 2 ou 3).
