@@ -52,7 +52,7 @@ while True :
         for i in range(len(produtos)): # Itera por todos itens
             if carrinho[i] > 0: # Se há unidades do item
                 subtotal = precos[i] * carrinho[i]
-                print(carrinho[i], "x", produtos[i], "(R$", f"{precos[i]:.2f}", "/un) = R$", f"{subtotal:.2f}")
+                print(carrinho[i], "x", produtos[i], "(R$", f"{precos[i]:.2f}" + "/un) = R$", f"{subtotal:.2f}")
                 total += subtotal
         if carrinho_vazio:
             print("Carrinho vazio.")
