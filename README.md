@@ -12,9 +12,9 @@ O sistema aplica regras de desconto tanto por quantidade quanto por valor total,
 **Funcionalidades**
 - Menu principal
   1) O usuário pode escolher entre:
-    - Adicionar item ao carrinho
-    - O programa solicita o nome do produto e a quantidade.
-    - Aceita variações como "oleo" para "Oleo de soja".
+      - Adicionar item ao carrinho
+      - O programa solicita o nome do produto e a quantidade.
+      - Aceita variações como "oleo" para "Oleo de soja".
   2) Garante que a quantidade seja um número inteiro positivo.
     - Ver total da compra
     - Exibe todos os itens adicionados ao carrinho com preço unitário, subtotal e total parcial.
