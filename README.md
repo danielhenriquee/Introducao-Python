@@ -31,13 +31,13 @@ O sistema aplica regras de desconto tanto por quantidade quanto por valor total,
     - Se o usuário digitar letras ou símbolos no menu → mensagem clara solicitando apenas números inteiros.
     - Se digitar número fora das opções (ex.: 7) → mensagem específica indicando opções válidas (1, 2 ou 3).
 
-- Conceitos de Python aplicados
-  - Estruturas de repetição (while, for)
-  - Estruturas condicionais (if, elif, else)
-  - Manipulação de strings (.lower(), .strip())
-  - Listas e iteração com índices
-  - Formatação de saída (f-strings, alinhamento e casas decimais)
-  - Boas práticas de interação com o usuário (validações e mensagens claras)
+**Conceitos de Python aplicados**
+- Estruturas de repetição (while, for)
+- Estruturas condicionais (if, elif, else)
+- Manipulação de strings (.lower(), .strip())
+- Listas e iteração com índices
+- Formatação de saída (f-strings, alinhamento e casas decimais)
+- Boas práticas de interação com o usuário (validações e mensagens claras)
 
 Este trabalho consolidou os principais conceitos iniciais de Python, unindo teoria e prática em um projeto simples e funcional.
 O sistema desenvolvido demonstra a importância da validação de entradas e do uso de estruturas básicas de programação para resolver problemas do dia a dia.
