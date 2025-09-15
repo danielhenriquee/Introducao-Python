@@ -11,15 +11,15 @@ O sistema aplica regras de desconto tanto por quantidade quanto por valor total,
 
 **Funcionalidades**
 - Menu principal
-  1. O usuário pode escolher entre:
+  1) O usuário pode escolher entre:
     - Adicionar item ao carrinho
     - O programa solicita o nome do produto e a quantidade.
     - Aceita variações como "oleo" para "Oleo de soja".
-  2. Garante que a quantidade seja um número inteiro positivo.
+  2) Garante que a quantidade seja um número inteiro positivo.
     - Ver total da compra
     - Exibe todos os itens adicionados ao carrinho com preço unitário, subtotal e total parcial.
     - Caso o carrinho esteja vazio, o sistema informa o usuário.
-  3. Finalizar compra
+  3) Finalizar compra
     - Mostra o recibo completo com todos os produtos comprados.
     - Aplica desconto por volume:
       - 3% para produtos com mais de 3 unidades.
