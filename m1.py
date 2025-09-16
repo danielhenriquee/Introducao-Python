@@ -34,6 +34,7 @@ while True :
                     if qtd_string.isdigit(): # Verifica se é dígito
                         quantidade = int(qtd_string)
                         if quantidade > 3:
+                            print("Três ou mais unidades foram adicionadas em uma única operação. Desconto de 3% aplicado no valor total deste item.")
                             desconto[i] = True
                         if quantidade > 0: # Verifica se é maior que 0
                             break
@@ -60,7 +61,7 @@ while True :
         if carrinho_vazio:
             print("Carrinho vazio.")
         else:
-            print("Total parcial: R$", f"{total:.2f}")
+            print("Total parcial (sem descontos): R$", f"{total:.2f}")
 
     elif opcao == "3": # Finalizar compra
         if carrinho_vazio:
