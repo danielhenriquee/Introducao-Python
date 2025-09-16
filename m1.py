@@ -8,6 +8,7 @@
 produtos = ["Arroz", "Feijao", "Oleo de soja", "Cafe", "Leite"]
 precos   = [25.50, 8.90, 7.00, 50.00, 4.50]
 carrinho = [0, 0, 0, 0, 0] # Carrinho começa vazio
+desconto = [False, False, False, False, False]
 carrinho_vazio = True
 
 while True :
@@ -32,6 +33,8 @@ while True :
                     qtd_string = input("Digite a quantidade: ")
                     if qtd_string.isdigit(): # Verifica se é dígito
                         quantidade = int(qtd_string)
+                        if quantidade > 3:
+                            desconto[i] = True
                         if quantidade > 0: # Verifica se é maior que 0
                             break
                         else:
@@ -75,7 +78,7 @@ while True :
             if carrinho[i] > 0:
                 subtotal = precos[i] * carrinho[i]
 
-                if carrinho[i] > 3: # Desconto por volume a partir de 3 unidades
+                if desconto[i] == True: # Desconto por volume a partir de 3 unidades
                     subtotal *= 0.97 # Desconto de 3%
                     total_bruto += subtotal
                     print(f"{carrinho[i]:<4} {'x':^3} {produtos[i]:<14} (R$ {precos[i]:>7.2f}/un) {'R$':>6} {subtotal:>7.2f}")
