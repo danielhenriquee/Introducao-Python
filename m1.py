@@ -87,7 +87,7 @@ while True :
                     total_bruto += subtotal
                     print(f"{carrinho[i]:<4} {'x':^3} {produtos[i]:<14} (R$ {precos[i]:>7.2f}/un) {'R$':>6} {subtotal:>7.2f}")
 
-        # Desconto geral: 10% para compras de R$100,00 a R$200,00; 20% para compras acima de R$200,00
+        # Desconto geral: 10% para compras de R$100,00 a R$200,00; 15% para compras acima de R$200,00
         if total_bruto > 200:
             desconto_geral = total_bruto * 0.15
             percentual = 15
