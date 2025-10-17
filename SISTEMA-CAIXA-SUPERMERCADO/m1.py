@@ -2,8 +2,6 @@
 # Guilherme Melo             - Código de pessoa: 8576076 - Número de matrícula: 26.1.0379
 # Leonardo Pinheiro de Souza - Código de pessoa: 8557802 - Número de matrícula: 25.2.7332
 
-# Comando no terminal para rodar o programa: python m1.py
-
 # Lista de produtos, preços e carrinho # Itens são associados pelos índices
 produtos = ["Arroz", "Feijao", "Oleo de soja", "Cafe", "Leite"]
 precos   = [25.50, 8.90, 7.00, 50.00, 4.50]

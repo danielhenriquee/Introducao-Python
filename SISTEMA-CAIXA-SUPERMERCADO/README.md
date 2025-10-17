@@ -7,7 +7,8 @@ O programa simula um sistema de caixa de supermercado, permitindo ao usuário ad
 O sistema aplica regras de desconto tanto por quantidade quanto por valor total, reforçando conceitos de estruturas de decisão, repetição e manipulação de strings em Python.
 
 **Como executar**
-'python m1.py'
+cd SISTEMA-CAIXA-SUPERMERCADO
+python m1.py
 
 **Funcionalidades**
 - Menu principal
