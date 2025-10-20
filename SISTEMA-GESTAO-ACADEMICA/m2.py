@@ -7,63 +7,6 @@ disciplinas: dict[str, dict[str, int]] = {}
 matriculas: list[dict[str, str]] = []
 
 
-def validar_matricula(matricula: str) -> bool:
-    """Valida uma matrícula.
-
-    Verifica se uma matrícula esta no formato correto:
-    - 7 Dígitos;
-    - 4 Primeiros dígitos são o ano de ingresso.
-
-    Args:
-        matricula: a matricula a ser validada.
-
-    Returns:
-        True se a matrícula é válida, False se não for.
-    """
-    return (
-        len(matricula) == 7
-        and matricula.isdigit()
-        and 1900 <= int(matricula[:4]) <= 2100
-    )
-
-
-def validar_codigo_disciplina(codigo: str) -> bool:
-    """Valida um código de disciplina.
-
-    Verifica se um código de disciplina esta no formato correto:
-    - 5 Dígitos;
-    - LLNNN.
-
-    Args:
-        codigo: Código de matrícula a ser validado.
-
-    Returns:
-        True se o código for válido, False se não for.
-    """
-    return (
-        len(codigo) == 5
-        and codigo[:2].isalpha()
-        and codigo[:2].isupper()
-        and codigo[2:].isdigit()
-    )
-
-
-def validar_vagas(vagas: str) -> bool:
-    """Valida quantidade de vagas.
-
-    Verifica se o input de vagas é valido:
-    - Apenas dígitos;
-    - Maior ou igual a 0.
-
-    Args:
-        vagas: Input de vagas a ser validado.
-
-    Returns:
-        True se a(s) vaga(s) for(em) valída(s), false se não for(em).
-    """
-    return vagas.isdigit() and int(vagas) >= 0
-
-
 def input_matricula(prompt: str, existe: bool | None = None) -> str:
     """Pede uma matrícula para o usuário.
 
@@ -80,18 +23,24 @@ def input_matricula(prompt: str, existe: bool | None = None) -> str:
     """
     while True:
         matricula = input(prompt).strip()
-        if not validar_matricula(matricula):
+        if (
+            len(matricula) == 7
+            and matricula.isdigit()
+            and 1900 <= int(matricula[:4]) <= 2100
+        ):
+            if existe is True and matricula not in alunos:
+                print("Matrícula não cadastrada.")
+                continue
+            if existe is False and matricula in alunos:
+                print("Matrícula já cadastrada.")
+                continue
+            else:
+                break
+        else:
             print(
-                "Matrícula inválida. Deve ter 7 dígitos e os 4 primeiros formam o ano."
+                "Matrícula inválida, deve ter 7 dígitos com os 4 primeiros sendo o ano de ingresso."
             )
-            continue
-        if existe is True and matricula not in alunos:
-            print("Matrícula não cadastrada.")
-            continue
-        if existe is False and matricula in alunos:
-            print("Matrícula já cadastrada.")
-            continue
-        return matricula
+    return matricula
 
 
 def input_codigo_disciplina(prompt: str, existe: bool | None = None) -> str:
@@ -111,16 +60,23 @@ def input_codigo_disciplina(prompt: str, existe: bool | None = None) -> str:
     """
     while True:
         codigo = input(prompt).strip()
-        if not validar_codigo_disciplina(codigo):
-            print("Código inválido. Deve ser LLNNN (ex: PY001).")
-            continue
-        if existe is True and codigo not in disciplinas:
-            print("Disciplina não cadastrada.")
-            continue
-        if existe is False and codigo in disciplinas:
-            print("Código já cadastrado.")
-            continue
-        return codigo
+        if (
+            len(codigo) == 5
+            and codigo[:2].isalpha()
+            and codigo[:2].isupper()
+            and codigo[2:].isdigit()
+        ):
+            if existe is True and codigo not in disciplinas:
+                print("Disciplina não cadastrada.")
+                continue
+            if existe is False and codigo in disciplinas:
+                print("Código já cadastrado.")
+                continue
+            else:
+                break
+        else:
+            print("Código inválido, deve ser no formato LLNNN (L = letra, N = número)")
+    return codigo
 
 
 def input_vagas(prompt: str) -> int:
@@ -137,38 +93,14 @@ def input_vagas(prompt: str) -> int:
     """
     while True:
         vagas = input(prompt).strip()
-        if not validar_vagas(vagas):
+        if vagas.isdigit() and int(vagas) >= 0:
+            break
+        else:
             print("Vagas inválidas. Digite um inteiro >= 0.")
-            continue
-        return int(vagas)
+    return int(vagas)
 
 
-def input_codigo_matricula(prompt: str, matricula: str) -> str:
-    """Pede um código de disciplina para o usuário.
-
-    Pede um código de disciplina para o usuário valida, e verifica
-    se a matrícula passada esta inscrita nesta disciplina,
-    pedindo outro código caso alguma verificação falhe.
-
-    Args:
-        prompt: Mensagem para mostrar ao usuário.
-        matricula: Matrícula para verificar se já está inscrita na disciplina.
-
-    Returns:
-        O código de disciplina digitado.
-    """
-    while True:
-        codigo = input_codigo_disciplina(prompt, existe=True)
-        if esta_inscrito(matricula, codigo):
-            print("Aluno já inscrito nesta disciplina.")
-            continue
-        if disciplinas[codigo]["vagas"] <= 0:
-            print("Não há vagas disponíveis.")
-            continue
-        return codigo
-
-
-def cadastrar_aluno(matricula: str, nome: str) -> tuple[bool, str]:
+def cadastrar_aluno(matricula: str, nome: str) -> None:
     """Cadastra um aluno.
 
     Coloca um aluno na lista de alunos, primeiro verificando se a matricula
@@ -184,15 +116,15 @@ def cadastrar_aluno(matricula: str, nome: str) -> tuple[bool, str]:
         caso contrário.
     """
     if matricula in alunos:
-        return False, "Matrícula já cadastrada."
+        print("Matrícula já cadastrada.")
     alunos[matricula] = {"nome": nome}
-    return True, "Aluno cadastrado com sucesso."
+    print("Aluno cadastrado com sucesso.")
 
 
 def alunos_ordenados() -> list[dict[str, str]]:
     """Ordena a lista de alunos.
 
-    Ordena a lista de alunos em ordem alfábetica.
+    Ordena a lista de alunos por matricula.
 
     Returns:
         A lista de alunos ordenada.
@@ -203,21 +135,19 @@ def alunos_ordenados() -> list[dict[str, str]]:
     )
 
 
-def buscar_aluno(matricula: str) -> dict[str, str] | None:
+def buscar_aluno(matricula: str) -> None:
     """Pesquisa um aluno.
 
     Pesquisa um aluno pela matrícula.
 
     Args:
         matricula: Matrícula do aluno a ser pesquisado.
-
-    Returns:
-        O aluno que possui a matrícula passada ou None caso não exista.
     """
-    return alunos.get(matricula)
+    aluno = alunos.get(matricula)
+    print(f"Nome: {aluno['nome']}")
 
 
-def cadastrar_disciplina(codigo: str, nome: str, vagas: int) -> tuple[bool, str]:
+def cadastrar_disciplina(codigo: str, nome: str, vagas: int) -> None:
     """Cadastra uma disciplina.
 
     Coloca uma discplina na lista de disciplinas, verificando antes se o código
@@ -234,15 +164,15 @@ def cadastrar_disciplina(codigo: str, nome: str, vagas: int) -> tuple[bool, str]
         contrário.
     """
     if codigo in disciplinas:
-        return False, "Código já cadastrado."
+        print("Código já cadastrado.")
     disciplinas[codigo] = {"nome": nome, "vagas": vagas}
-    return True, "Disciplina cadastrada com sucesso."
+    print("Disciplina cadastrada com sucesso.")
 
 
 def disciplinas_ordenadas() -> list[dict[str, str | int]]:
     """Ordena a lista de disciplinas.
 
-    Ordena a lista de disciplinas em ordem alfabética.
+    Ordena a lista de disciplinas por código.
 
     Returns:
         A lista de disciplinas ordenada.
@@ -256,18 +186,18 @@ def disciplinas_ordenadas() -> list[dict[str, str | int]]:
     )
 
 
-def buscar_disciplina(codigo: str) -> dict[str, str | int] | None:
-    """Busca uma disciplina.
+def buscar_disciplina(codigo: str) -> None:
+    """Busca disciplina.
 
-    Pesquisa uma discplina pelo código de disciplina.
+    Pesquisa uma disciplina pelo código de disciplina.
 
     Args:
         codigo: Código da disciplina a ser buscada.
-
-    Returns:
-        A disciplina se for encontrada ou None se não for.
     """
-    return disciplinas.get(codigo)
+    disciplina = disciplinas.get(codigo)
+    print(f"{'Código':<8} | {'Nome':<30} | {'Vagas':<5}")
+    print("-" * 46)
+    print(f"{codigo:<8} | {disciplina['nome']:<30} | {disciplina['vagas']:<5}")
 
 
 def esta_inscrito(matricula: str, codigo: str) -> bool:
@@ -288,7 +218,7 @@ def esta_inscrito(matricula: str, codigo: str) -> bool:
     return False
 
 
-def inscrever_aluno_disciplina(matricula: str, codigo: str) -> tuple[bool, str]:
+def inscrever_aluno_disciplina(matricula: str, codigo: str) -> None:
     """Inscreve um aluno em uma discplina.
 
     Cadastra um aluno em uma disciplina, verificando antes e o aluno já foi
@@ -304,12 +234,14 @@ def inscrever_aluno_disciplina(matricula: str, codigo: str) -> tuple[bool, str]:
         disciplina." ou "Não há vagas disponíveis." caso contrário.
     """
     if esta_inscrito(matricula, codigo):
-        return False, "Aluno já inscrito nesta disciplina."
+        print("Aluno já inscrito nesta disciplina.")
+        return
     if disciplinas[codigo]["vagas"] <= 0:
-        return False, "Não há vagas disponíveis."
+        print("Não há vagas disponíveis.")
+        return
     matriculas.append({"matricula": matricula, "codigo": codigo})
     disciplinas[codigo]["vagas"] -= 1
-    return True, "Inscrição realizada com sucesso."
+    print("Inscrição realizada com sucesso.")
 
 
 def listar_inscricoes() -> bool:
@@ -419,8 +351,7 @@ def menu_gestao_alunos():
                     print("Nome não pode ser vazio.")
                     continue
                 break
-            ok, msg = cadastrar_aluno(matricula, nome)
-            print(msg)
+            cadastrar_aluno(matricula, nome)
         elif op == "2":
             lista = alunos_ordenados()
             if not lista:
@@ -432,12 +363,7 @@ def menu_gestao_alunos():
                     print(f"{aluno['matricula']:<10} | {aluno['nome']:<30}")
         elif op == "3":
             matricula = input_matricula("Matrícula: ", existe=True)
-            aluno = buscar_aluno(matricula)
-            print(
-                f"Matrícula: {matricula} | Nome: {aluno['nome']}"
-                if aluno
-                else "Aluno não encontrado."
-            )
+            buscar_aluno(matricula)
         elif op == "4":
             return
         else:
@@ -467,8 +393,7 @@ def menu_gestao_disciplinas():
                     continue
                 break
             vagas = input_vagas("Vagas (inteiro >= 0): ")
-            ok, msg = cadastrar_disciplina(codigo, nome, vagas)
-            print(msg)
+            cadastrar_disciplina(codigo, nome, vagas)
         elif op == "2":
             lista = disciplinas_ordenadas()
             if not lista:
@@ -480,15 +405,7 @@ def menu_gestao_disciplinas():
                     print(f"{d['codigo']:<8} | {d['nome']:<30} | {d['vagas']:<5}")
         elif op == "3":
             codigo = input_codigo_disciplina("Código: ", existe=True)
-            disciplina = buscar_disciplina(codigo)
-            if disciplina:
-                print(f"{'Código':<8} | {'Nome':<30} | {'Vagas':<5}")
-                print("-" * 46)
-                print(
-                    f"{codigo:<8} | {disciplina['nome']:<30} | {disciplina['vagas']:<5}"
-                )
-            else:
-                print("Disciplina não encontrada.")
+            buscar_disciplina(codigo)
         elif op == "4":
             return
         else:
@@ -508,9 +425,8 @@ def menu_gestao_matriculas():
         op = input("Escolha: ").strip()
         if op == "1":
             matricula = input_matricula("Matrícula do aluno: ", existe=True)
-            codigo = input_codigo_matricula("Código da disciplina: ", matricula)
-            ok, msg = inscrever_aluno_disciplina(matricula, codigo)
-            print(msg)
+            codigo = input_codigo_disciplina("Código da disciplina: ", existe=True)
+            inscrever_aluno_disciplina(matricula, codigo)
         elif op == "2":
             if not listar_inscricoes():
                 print("Nenhuma inscrição realizada.")
