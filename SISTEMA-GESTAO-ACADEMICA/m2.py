@@ -409,7 +409,8 @@ def menu_gestao_disciplinas():
         op = input("Escolha: ").strip()
         if op == "1":
             codigo = input_codigo_disciplina(
-                "Código (LLNNN) [-1 para voltar]: ", existe=False
+                "Código (LLNNN) [-1 para voltar] (L = letra, N = número): ",
+                existe=False,
             )
             if codigo is None:
                 continue
