@@ -141,7 +141,7 @@ def alunos_ordenados() -> list[dict[str, str]]:
         'matricula' e 'nome'.
     """
     alunos_list = [{"matricula": m, "nome": d["nome"]} for m, d in alunos.items()]
-    return sorted(alunos_list, key=lambda x: x["matricula"])
+    return sorted(alunos_list, key = lambda x: x["matricula"])
 
 
 def buscar_aluno(matricula: str) -> None:
@@ -191,7 +191,7 @@ def disciplinas_ordenadas() -> list[dict[str, str | int]]:
         {"codigo": c, "nome": d["nome"], "vagas": d["vagas"]}
         for c, d in disciplinas.items()
     ]
-    return sorted(disciplinas_list, key=lambda x: x["codigo"])
+    return sorted(disciplinas_list, key = lambda x: x["codigo"])
 
 
 def buscar_disciplina(codigo: str) -> None:
@@ -284,13 +284,12 @@ def ordenar_alunos_por_disciplina(codigo: str) -> list[dict[str, str]] | None:
     """
     if codigo not in disciplinas:
         return None
-    return sorted(
-        [
-            {"matricula": m, "nome": alunos[m]["nome"]}
-            for m in [i["matricula"] for i in matriculas if i["codigo"] == codigo]
-        ],
-        key=lambda x: x["matricula"],
-    )
+    alunos_list = [
+        {"matricula": i["matricula"], "nome": alunos[i["matricula"]]["nome"]}
+        for i in matriculas
+        if i["codigo"] == codigo
+    ]
+    return sorted(alunos_list, key=lambda x: x["matricula"])
 
 
 def ordenar_disciplinas_por_aluno(matricula: str) -> list[dict[str, str]] | None:
@@ -309,13 +308,12 @@ def ordenar_disciplinas_por_aluno(matricula: str) -> list[dict[str, str]] | None
     """
     if matricula not in alunos:
         return None
-    return sorted(
-        [
-            {"codigo": c, "nome": disciplinas[c]["nome"]}
-            for c in [i["codigo"] for i in matriculas if i["matricula"] == matricula]
-        ],
-        key=lambda x: x["codigo"],
-    )
+    disciplinas_list = [
+        {"codigo": i["codigo"], "nome": disciplinas[i["codigo"]]["nome"]}
+        for i in matriculas
+        if i["matricula"] == matricula
+    ]
+    return sorted(disciplinas_list, key=lambda x: x["codigo"])
 
 
 def disciplinas_com_vagas_esgotadas() -> list[dict[str, str]]:
@@ -328,12 +326,12 @@ def disciplinas_com_vagas_esgotadas() -> list[dict[str, str]]:
         list[dict[str, str]]: Lista de disciplinas com vagas esgotadas,
         cada uma representada como um dicionário com as chaves 'codigo' e 'nome'.
     """
-    return [
+    disciplinas_list = [
         {"codigo": c, "nome": d["nome"]}
         for c, d in disciplinas.items()
-        if d["vagas"] <= 0
+        if d["vagas"] == 0
     ]
-
+    return disciplinas_list
 
 def menu_gestao_alunos():
     """Exibe o menu de gestão de alunos.
@@ -356,7 +354,7 @@ def menu_gestao_alunos():
         if op == "1":
             matricula = input_matricula(
                 "Matrícula (7 dígitos e os 4 primeiros formam o ano) [-1 para voltar]: ",
-                existe=False,
+                existe = False,
             )
             if matricula is None:
                 continue
@@ -379,7 +377,7 @@ def menu_gestao_alunos():
                 for aluno in lista:
                     print(f"{aluno['matricula']:<9} | {aluno['nome']:<30}")
         elif op == "3":
-            matricula = input_matricula("Matrícula [-1 para voltar]: ", existe=True)
+            matricula = input_matricula("Matrícula [-1 para voltar]: ", existe = True)
             if matricula is None:
                 continue
             buscar_aluno(matricula)
@@ -410,7 +408,7 @@ def menu_gestao_disciplinas():
         if op == "1":
             codigo = input_codigo_disciplina(
                 "Código (LLNNN) [-1 para voltar] (L = letra, N = número): ",
-                existe=False,
+                existe = False,
             )
             if codigo is None:
                 continue
@@ -437,7 +435,7 @@ def menu_gestao_disciplinas():
                 for d in lista:
                     print(f"{d['codigo']:<6} | {d['nome']:<30} | {d['vagas']:<5}")
         elif op == "3":
-            codigo = input_codigo_disciplina("Código [-1 para voltar]: ", existe=True)
+            codigo = input_codigo_disciplina("Código [-1 para voltar]: ", existe = True)
             if codigo is None:
                 continue
             buscar_disciplina(codigo)
@@ -462,7 +460,7 @@ def menu_gestao_matriculas():
         if op == "1":
             while True:
                 matricula = input_matricula(
-                    "Matrícula do aluno [-1 para voltar]: ", existe=None
+                    "Matrícula do aluno [-1 para voltar]: ", existe = None
                 )
                 if matricula is None:
                     break
@@ -470,7 +468,7 @@ def menu_gestao_matriculas():
                     print("Matrícula não cadastrada.")
                     continue
                 codigo = input_codigo_disciplina(
-                    "Código da disciplina [-1 para voltar]: ", existe=True
+                    "Código da disciplina [-1 para voltar]: ", existe = True
                 )
                 if codigo is None:
                     break
@@ -505,7 +503,7 @@ def menu_relatorios():
         op = input("Escolha: ").strip()
         if op == "1":
             codigo = input_codigo_disciplina(
-                "Código da disciplina [-1 para voltar]: ", existe=True
+                "Código da disciplina [-1 para voltar]: ", existe = True
             )
             if codigo is None:
                 continue
@@ -519,7 +517,7 @@ def menu_relatorios():
                     print(f"{r['matricula']:<9} | {r['nome']:<30}")
         elif op == "2":
             matricula = input_matricula(
-                "Matrícula do aluno [-1 para voltar]: ", existe=True
+                "Matrícula do aluno [-1 para voltar]: ", existe = True
             )
             if matricula is None:
                 continue
